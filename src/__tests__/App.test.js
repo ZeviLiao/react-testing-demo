@@ -7,5 +7,7 @@ test('renders learn react link', () => {
 
  ReactDOM.render(<App/>,div);
 
+ expect(div.innerHTML).toContain('Zevi')
+
  ReactDOM.unmountComponentAtNode(div);
 });
