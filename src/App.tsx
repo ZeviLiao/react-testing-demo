@@ -1,20 +1,22 @@
 import { useEffect, useRef } from "react";
 import { fromEvent, Subject } from "rxjs";
+import { map } from "rxjs/operators";
 
 function App() {
   const ref = useRef(null);
-
-  let cnter = 0;
-  const counter$ = new Subject();
-
   const test = () => {
-    const btnEvent$ = fromEvent(ref.current as any, "click");
-    btnEvent$.subscribe((v) => {
-      ++cnter;
-      counter$.next(cnter);
-      // console.log("click")
-    });
-    counter$.subscribe((v) => console.log(v));
+    const click$ = fromEvent(ref.current as any, "click");
+
+    const counter2$ = click$.pipe(
+      map((o: any, i) => {
+        // console.log(o.x, o.y);
+        console.log(i + 1 + "-zevi");
+      })
+    );
+
+    click$.subscribe();
+
+    counter2$.subscribe();
   };
 
   useEffect(() => {
