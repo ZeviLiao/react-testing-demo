@@ -4,20 +4,25 @@ import { Observable } from "rxjs";
 function App() {
   const ref = useRef(null);
   const test = () => {
-    // create stream.
-    const data$ = new Observable((sub) => {
-      sub.next(1);
+    // subscribe
+    const sbb = (sub: any) => { //可訂閱的片子。
+      sub.next(1); // 片子
       sub.next(2);
       sub.complete();
-    });
+    };
+    // observable - create a stream -
+    const data$ = new Observable(sbb);   // 網飛.
 
+    //
+
+    // observer
     const obr = {
-      next: (v: any) => console.log(v),
+      next: (v: any) => console.log(v),  // 看片子。
       error: (err: any) => console.log(err),
       complete: () => console.log("ok"),
     };
     // subscribe stream.
-    data$.subscribe(obr);
+    data$.subscribe(obr);  // 付錢訂閱
   };
 
   useEffect(() => {
