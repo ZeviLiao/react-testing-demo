@@ -1,11 +1,20 @@
 import { useEffect, useRef } from "react";
-import { fromEvent } from "rxjs";
+import { fromEvent, Subject } from "rxjs";
 
 function App() {
   const ref = useRef(null);
+
+  let cnter = 0;
+  const counter$ = new Subject();
+
   const test = () => {
-    const data$ = fromEvent(ref.current as any, "click");
-    data$.subscribe((v) => console.log("click"));
+    const btnEvent$ = fromEvent(ref.current as any, "click");
+    btnEvent$.subscribe((v) => {
+      ++cnter;
+      counter$.next(cnter);
+      // console.log("click")
+    });
+    counter$.subscribe((v) => console.log(v));
   };
 
   useEffect(() => {
@@ -16,7 +25,7 @@ function App() {
 
   return (
     <div style={{ padding: "15px" }}>
-      <button ref={ref}>hello</button>
+      <button ref={ref}>+</button>
     </div>
   );
 }
