@@ -2,21 +2,21 @@ import { useEffect, useRef } from "react";
 import { fromEvent } from "rxjs";
 
 function App() {
-  const buttonHandler = (buttonRef: any) => {
-    const data$ = fromEvent(buttonRef, "click");
+  const ref = useRef(null);
+  const test = () => {
+    const data$ = fromEvent(ref.current as any, "click");
     data$.subscribe((v) => console.log("click"));
   };
-  const test = () => {};
 
   useEffect(() => {
-    // test();
+    test();
 
     return () => {};
   }, []);
 
   return (
     <div style={{ padding: "15px" }}>
-      <button ref={buttonHandler}>hello</button>
+      <button ref={ref}>hello</button>
     </div>
   );
 }
