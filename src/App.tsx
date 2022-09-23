@@ -4,15 +4,13 @@ import { Subject } from "rxjs";
 
 function App() {
   const btnRef = useRef<HTMLButtonElement>(null);
+  const data$ = new Subject(); // TV
   const test = () => {
-    const data$ = new Subject(); // TV
+    data$.subscribe((value) => {
+      console.log(value);
+    });
 
-    data$.subscribe((value) => console.log(value));
-
-    data$.next(1); // 送節目。
-    data$.next(2);
-    data$.next(3);
-    data$.next(4);
+    // data$.next(1); // 送節目。
     // range(1, 10)
     //   .pipe(
     //     filter((x) => x % 2 === 1),
@@ -21,7 +19,9 @@ function App() {
     //   .subscribe((x) => console.log(x));
   };
 
-  const btnClick = () => console.log("hello");
+  const btnClick = () => {
+    data$.next("hello");
+  };
 
   useEffect(() => {
     const btn = btnRef.current;
