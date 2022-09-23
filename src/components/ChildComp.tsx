@@ -15,5 +15,5 @@ const Child = ({ name, onClick}: ChildProps): JSX.Element => {
   );
 }
 
-// export const ChildMemo = memo(Child);
-export const ChildMemo = Child;
+export const ChildMemo = memo(Child);
+// export const ChildMemo = Child;
