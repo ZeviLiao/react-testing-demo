@@ -1,26 +1,23 @@
-import { useState, useCallback } from "react";
-import { ChildMemo } from "./components/ChildComp";
+import { useEffect } from "react";
+import { range, filter, map } from "rxjs";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState("Child组件");
+  const test = () => {
+    range(1, 10)
+      .pipe(
+        filter((x) => x % 2 === 1),
+        map((x) => x + x)
+      )
+      .subscribe((x) => console.log(x));
+  };
 
-  console.log("父组件?");
+  useEffect(() => {
+    test();
+  }, []);
 
   return (
     <>
-      <button
-        onClick={(e) => {
-          setCount(count + 1);
-        }}
-      >
-        加1
-      </button>
-      <p>count:{count}</p>
-      <ChildMemo
-        name={name}
-        onClick={useCallback((newName: string) => setName(newName), [])}
-      />
+      <h1>hello</h1>
     </>
   );
 }
