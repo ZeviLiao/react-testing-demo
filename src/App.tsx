@@ -1,22 +1,23 @@
 import { useEffect, useRef } from "react";
-import { fromEvent, Subject } from "rxjs";
-import { map, filter } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 function App() {
   const ref = useRef(null);
   const test = () => {
     // create stream.
-    const click$ = fromEvent(ref.current as any, "click");
+    const data$ = new Observable((sub) => {
+      sub.next(1);
+      sub.next(2);
+      sub.complete();
+    });
 
-    // from another stream.
-    const counter2$ = click$.pipe(map((o: any, i) => i + 1));
-
-    const eventCtr$ = counter2$.pipe(filter((v) => v % 2 === 0));
-
+    const obr = {
+      next: (v: any) => console.log(v),
+      error: (err: any) => console.log(err),
+      complete: () => console.log("ok"),
+    };
     // subscribe stream.
-    click$.subscribe();
-    counter2$.subscribe((v) => console.log(v));
-    eventCtr$.subscribe((v) => console.log("---", v));
+    data$.subscribe(obr);
   };
 
   useEffect(() => {
