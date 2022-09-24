@@ -1,28 +1,30 @@
 import { useEffect, useRef } from "react";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 function App() {
   const ref = useRef(null);
   const test = () => {
     // subscribe
-    const sbb = (sub: any) => { //可訂閱的片子。
+    const sbb = (sub: any) => {
+      //可訂閱的片子。
       sub.next(1); // 片子
       sub.next(2);
       sub.complete();
     };
     // observable - create a stream -
-    const data$ = new Observable(sbb);   // 網飛.
-
+    let data$ = new Observable(sbb) // 網飛.
+      .pipe(map((o: any) => o % 2 === 0));
     //
 
     // observer
     const obr = {
-      next: (v: any) => console.log(v),  // 看片子。
+      next: (v: any) => console.log(v), // 看片子。
       error: (err: any) => console.log(err),
       complete: () => console.log("ok"),
     };
     // subscribe stream.
-    data$.subscribe(obr);  // 付錢訂閱
+    data$.subscribe(obr); // 付錢訂閱
   };
 
   useEffect(() => {
